@@ -18,6 +18,7 @@ namespace MoscowWeather.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            db.Database.SetCommandTimeout(1000);
             var weather = db.Weather.Include(t => t.WeatherCondition).Include(t => t.WindDirection).OrderBy(t => t.DateTime).ToList();
             var years = db.Weather.Select(t => t.DateTime.Year).Distinct().ToList();
             var months = db.Weather.Select(t => t.DateTime.Month).Distinct().ToList();
@@ -48,6 +49,7 @@ namespace MoscowWeather.Controllers
         [HttpPost]
         public IActionResult DoFilter(string Year, string Month)
         {
+            db.Database.SetCommandTimeout(1000);
             var yearInt = TryParseNullableInt(Year);
             var monthInt = TryParseNullableInt(Month);
             var criteria = new FilterCriteria { Year = yearInt, Month = monthInt};
