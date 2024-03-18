@@ -1,0 +1,89 @@
+﻿@model MoscowWeather.ViewModel.Filter
+@{
+    ViewData["Title"] = "Архив погоды в г. Москве";
+}
+<br />
+<br />
+<form asp-action="DoFilter" asp-controller="View" method="post" id="formDate">
+
+    <input type="radio" class="btn-check" name="Year" id="option1" autocomplete="off" value="Все" onclick="handleClickRadio()">
+    <label class="btn btn-secondary" for="option1">Все</label>
+    @foreach(var year in Model.Years)
+    {
+        <input type="radio" class="btn-check" name="Year" id="@year" autocomplete="off" value="@year" onclick="handleClickRadio()">
+    <label class="btn btn-secondary" for="@year">@year</label>
+    }
+    <br /><br />
+    <input type="radio" class="btn-check" name="Month" id="option2" autocomplete="off" value="Все" onclick="handleClickRadio()">
+    <label class="btn btn-secondary" for="option2">Все</label>
+    @foreach (var month in Model.Months)
+    {
+        <input type="radio" class="btn-check" name="Month" id="@month.Value" autocomplete="off" value="@month.Value"
+               onclick="handleClickRadio()">
+        <label class="btn btn-secondary" for="@month.Value">@month.Text</label>
+    }
+    <input type="submit" hidden="hidden" id="SubmitButton" value="Отправить" />
+</form>
+    <br /><br />
+    <table class="table table-striped table-hover" id="weatherTab">
+        <thead>
+            <tr>
+                <th scope="col">Дата и время</th>
+                <th scope="col">Температура воздуха</th>
+                <th scope="col">Относительная влажность воздуха, %</th>
+                <th scope="col">Точка росы</th>
+                <th scope="col">Атмосферное давление, мм. рт. ст.</th>
+                <th scope="col">Направление ветра</th>
+                <th scope="col">Скорость ветра, м/с</th>
+                <th scope="col">Облачность, %</th>
+                <th scope="col">Нижняя граница облачности, м</th>
+                <th scope="col">Горизонтальная видимость, км</th>
+                <th scope="col">Природные явления</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var weather in Model.Weather)
+            {
+                <tr>
+                    <th scope="row">@weather.DateTime</th>
+                    <td>@weather.Temperature</td>
+                    <td>@weather.RelativeHumidity</td>
+                    <td>@weather.DewPoint</td>
+                    <td>@weather.AtmospherePressure</td>
+                    <td>@{
+                          string windDir = weather.WindDirection != null ? string.Join(',', weather.WindDirection.Select(t => t.Name)) : "";  
+                        } @windDir</td>
+                    <td>@weather.WindSpeed</td>
+                    <td>@weather.Cloudiness</td>
+                    <td>@weather.CloudBase</td>
+                    <td>@weather.HorizontalVisibility</td>
+                    <td>@{string weatherCondition = weather.WeatherCondition != null ? @weather.WeatherCondition.Name : "";}
+                        @weatherCondition
+                    </td>
+
+            </tr>
+            }
+    </table>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    function handleClickRadio() {
+        console.log('ddd');
+        $('#SubmitButton').click();
+    }
+    function checkButtons() {
+        if (@Model.Criteria.Month.HasValue.ToString().ToLower()) {
+        var buttonMonth = document.getElementById(@Model.Criteria.Month);
+        if(buttonMonth == null)
+                buttonMonth = document.getElementById('option1');
+        buttonMonth.checked = 'checked';
+    }
+        if (@Model.Criteria.Year.HasValue.ToString().ToLower()) {
+        var buttonYear = document.getElementById(@Model.Criteria.Year);
+        if (buttonYear == null)
+                buttonYear = document.getElementById('option2');
+        buttonYear.checked = 'checked';
+        }
+    }
+    window.onload = checkButtons;
+</script>

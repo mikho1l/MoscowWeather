@@ -1,0 +1,104 @@
+﻿@* @{
+    ViewData["Title"] = "Загрузка архивов";
+}
+@if (ViewData["Success"] != null) {
+    <div id="successMessage">
+        @ViewData["Success"]
+    </div>
+}
+<h3>Выберите файлы для загрузки</h3>
+<form asp-action="AddFile" asp-controller="Load" method="post" enctype="multipart/form-data">
+    <input type="file" name="uploads" multiple="true" /><br>
+    <input type="submit" value="Загрузить" />
+</form> *@
+
+@* @{
+    ViewData["Title"] = "Загрузка архивов";
+}
+@if (ViewData["Success"] != null)
+{
+    <div id="successMessage" class="alert alert-success" role="alert">
+        @ViewData["Success"]
+    </div>
+}
+<div class="container">
+    <h3>Выберите файлы для загрузки</h3>
+    <form asp-action="AddFile" asp-controller="Load" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="file" name="uploads" multiple="true" class="form-control-file" />
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить</button>
+    </form>
+</div> *@
+@* @{
+    ViewData["Title"] = "Загрузка архивов";
+}
+@if (ViewData["Success"] != null)
+{
+    <div id="successMessage" class="alert alert-success" role="alert">
+        @ViewData["Success"]
+    </div>
+}
+<div class="container mt-5">
+    <div class="row justify-content-around">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Выберите файлы для загрузки</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddFile" asp-controller="Load" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="file" name="uploads" id="uploads" multiple="true" class="form-control-file" />
+                        </div>
+                        <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">Загрузить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+@{
+    ViewData["Title"] = "Загрузка архивов";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Выберите файлы для загрузки</h3>
+                </div>
+                <div class="card-body">
+                    @if (ViewData["Success"] != null)
+                    {
+                        @if(ViewData["Error"] == "true")
+                        {
+                            <div id="successMessage" class="alert alert-danger" role="alert">
+                                @ViewData["Success"]
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="successMessage" class="alert alert-success" role="alert">
+                                @ViewData["Success"]
+                            </div>
+                        }
+                    }
+                    <form asp-action="AddFile" asp-controller="Load" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="file" name="uploads" id="uploads" multiple="true" class="form-control-file" />
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Загрузить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

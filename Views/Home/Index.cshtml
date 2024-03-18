@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Архив погоды";
+}
+
+
+<head>
+    <style>
+        .custom-form {
+            margin-top: 50px;
+        }
+        .btn-custom {
+            font-size: 24px;
+            padding: 20px 40px;
+            margin-right: 20px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form class="custom-form">
+                    <h2 class="text-center">Добро пожаловать! Выберите действие:</h2>
+                    <div class="btn-container">
+                        <button type="button" class="btn btn-primary btn-custom" 
+                        onclick="location.href='@Url.Action("Index", "View")'">
+                            Просмотр архивов погоды в г. Москве</button>
+                        <button type="button" class="btn btn-success btn-custom" 
+                        onclick="location.href='@Url.Action("Index", "Load")'">
+                            Загрузка архивов погоды в г. Москве</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
