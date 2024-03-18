@@ -7,8 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 if (connection.Contains("%CONTENTROOTPATH%"))
 {
-    connection = connection.Replace("%CONTENTROOTPATH%", builder.Environment.ContentRootPath.ToString());
+    string rootPath = builder.Environment.ContentRootPath.ToString();
+    if (builder.Environment.ContentRootPath.ToString().Last() != '\\')
+        rootPath += "\\";
+    connection = connection.Replace("%CONTENTROOTPATH%", rootPath);
 }
+
 builder.Services.AddDbContext<WeatherContext>(options => options.UseSqlServer(connection));
 builder.Services.AddControllersWithViews();
 
